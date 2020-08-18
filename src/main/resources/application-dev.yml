@@ -9,7 +9,8 @@ logging:
   level:
     root: info
     com.lgf: debug
-  file: log/blog-dev.log
+  file:
+    name: log/blog-dev.log
 
 mybatis:
   type-aliases-package: com.lgf.entity

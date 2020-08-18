@@ -27,7 +27,6 @@
         <a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide"><i class="clock icon"></i>时间</a>
         <a href="#" th:href="@{/message}" class="m-item item m-mobile-hide"><i class="book icon"></i>留言</a>
         <a href="#" th:href="@{/friends}" class="m-item item m-mobile-hide"><i class="pencil alternate icon"></i>友人</a>
-        <a href="#" th:href="@{/picture}" class="m-item item m-mobile-hide"><i class="image icon"></i>照片</a>
         <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide"><i class="info icon"></i>关于</a>
       <!--</div>-->
       <div class="right m-item item m-mobile-hide">
@@ -414,32 +413,9 @@ h5,h6{font-size:1em;}
           </tr>
           </tbody>
         </table>
-
         <h5 id="appendix2">2、开源许可</h5>
-
       </div>
-
       <div class="ui horizontal divider">end</div>
-    </div>
-    <!--赞赏-->
-    <div th:if="${blog.appreciation}">
-      <div class="ui center aligned basic segment">
-        <button id="payButton" class="ui orange basic circular button">赞赏</button>
-      </div>
-      <div class="ui payQR flowing popup transition hidden">
-        <div class="ui orange basic label">
-          <div class="ui images" style="font-size: inherit !important;">
-            <div class="image">
-              <img src="../static/images/zhifupay.jpg" th:src="@{/images/zhifupay.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
-              <div>支付宝</div>
-            </div>
-            <div class="image">
-              <img src="../static/images/wechatpay.jpg" th:src="@{/images/wechatpay.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
-              <div>微信</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div th:if="${blog.commentabled}">
       <!--评论区域列表-->
@@ -547,6 +523,8 @@ h5,h6{font-size:1em;}
     <div class="ui inverted divided stackable grid">
       <div class="wide column">
         <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+        <br/>
+        <p style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">我的博客已运行：<span id="htmer_time" class="item m-text-thin"></span></p>
       </div>
     </div>
     <div class="ui inverted section divider"></div>
@@ -682,6 +660,45 @@ h5,h6{font-size:1em;}
         $("[name='parentComment.id']").val(commentId);
         $(window).scrollTo($('#comment-form'),500);
     }
+
+    // 运行时间统计
+    function secondToDate(second) {
+      if (!second) {
+        return 0;
+      }
+      var time = new Array(0, 0, 0, 0, 0);
+      if (second >= 365 * 24 * 3600) {
+        time[0] = parseInt(second / (365 * 24 * 3600));
+        second %= 365 * 24 * 3600;
+      }
+      if (second >= 24 * 3600) {
+        time[1] = parseInt(second / (24 * 3600));
+        second %= 24 * 3600;
+      }
+      if (second >= 3600) {
+        time[2] = parseInt(second / 3600);
+        second %= 3600;
+      }
+      if (second >= 60) {
+        time[3] = parseInt(second / 60);
+        second %= 60;
+      }
+      if (second > 0) {
+        time[4] = second;
+      }
+      return time;
+    }
+    function setTime() {
+      /*此处为网站的创建时间*/
+      var create_time = Math.round(new Date(Date.UTC(2020, 05, 25, 0, 0, 0)).getTime() / 1000);
+      var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+      currentTime = secondToDate((timestamp - create_time));
+      currentTimeHtml = currentTime[0] + '年' + currentTime[1] + '天'
+              + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4]
+              + '秒';
+      document.getElementById("htmer_time").innerHTML = currentTimeHtml;
+    }
+    setInterval(setTime, 1000);
 </script>
 </body>
 </html>
