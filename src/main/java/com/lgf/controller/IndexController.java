@@ -39,7 +39,7 @@ public class IndexController {
 //    分页查询博客列表
     @GetMapping("/")
     public String index(Model model, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, RedirectAttributes attributes){
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,4);
         List<FirstPageBlog> allFirstPageBlog = blogService.getAllFirstPageBlog();
         List<RecommendBlog> recommendedBlog = blogService.getRecommendedBlog();
 
