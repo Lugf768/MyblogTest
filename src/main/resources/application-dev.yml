@@ -8,7 +8,7 @@ spring:
 logging:
   level:
     root: info
-    com.star: debug
+    com.lgf: debug
   file: log/blog-dev.log
 
 mybatis:

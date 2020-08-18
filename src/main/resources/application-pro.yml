@@ -8,7 +8,7 @@ spring:
 logging:
   level:
     root: warn
-    com.star: info
+    com.lgf: info
   file: log/blog-pro.log
 
 mybatis:
